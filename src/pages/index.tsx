@@ -14,7 +14,10 @@ gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
+  const a = api.Admin.getAll.useQuery()
+  const b = api.Admin.createMachineData.useMutation()
   
+  console.log(a.data)
   return (
     <>
       <Head>
@@ -24,11 +27,14 @@ export default function Home() {
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center overflow-x-hidden bg-[#020509]">
         <NavBar/>
+        {/* TODO:Fazer a parte 3d do Hero */}
         <Hero/>
         <Data/>
         <About/>
         <MadeBy/>
         <Contact/>
+        {/* TODO: Remove that */}
+        <button onClick={() => b.mutate()}>Btn</button>
       </main>
     </>
   );
