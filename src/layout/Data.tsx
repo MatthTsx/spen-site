@@ -18,15 +18,17 @@ function Data() {
 
   return (
     <div className='h-screen w-screen flex items-center text-white justify-between px-[5%]'>
-      <div className=''>
+      <div className='flex items-center flex-wrap w-[25%] gap-2'>
         {data.status == "success" &&
         <>
-          <p>Nome do local: {data?.data[0]?.localeName}</p>
-          <p>Data 1: {data?.data[0]?.Data1}</p>
-          <p>Data 2: {data?.data[0]?.Data2}</p>
-          <p>Data 3: {data?.data[0]?.Data3}</p>
-          <p>Temperatura: {data?.data[0]?.temperature}</p>
-          <p>Temperatura: {data?.dataUpdatedAt}</p>
+          <div className='data'><div className='data2'/><p>nome do local: {data?.data[0]?.localeName}</p></div>
+          <div className='data'><div className='data2'/><p>altitude: {data?.data[0]?.altitude}</p></div>
+          <div className='data'><div className='data2'/><p>chuva: {data?.data[0]?.chuva}</p></div>
+          <div className='data'><div className='data2'/><p>direção do vento: {data?.data[0]?.direVent}</p></div>
+          <div className='data'><div className='data2'/><p>temperatura: {data?.data[0]?.temperature}</p></div>
+          <div className='data'><div className='data2'/><p>pressao: {data?.data[0]?.pressao}</p></div>
+          <div className='data'><div className='data2'/><p>umidade: {data?.data[0]?.umidade}</p></div>
+          <div className='data'><div className='data2'/><p>velocidade do vento: {data?.data[0]?.veloVent}</p></div>
         </>
         }
       </div>

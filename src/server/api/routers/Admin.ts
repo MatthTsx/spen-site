@@ -10,7 +10,8 @@ export const AdminRouter = createTRPCRouter({
     .mutation(async ({ctx}) => {
         return await ctx.db.machineData.create({
             data: {
-                Data1: 69, Data2: 69, temperature: 25, Data3: 69, localeName: "cu do rafael"
+                localeName: "cu do rafael", altitude: 2, chuva: 5, direVent: 1, pressao: 23, temperature: 34, umidade: 90,
+                veloVent: 23
             }
         })
     }),

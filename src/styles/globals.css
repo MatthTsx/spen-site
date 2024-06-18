@@ -15,4 +15,17 @@
         --tw-translate-y: -55% !important;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
     }
+
+    .data{
+        @apply rounded-md relative flex items-center justify-center opacity-50 hover:opacity-100 hover:scale-105 transition-all
+        cursor-pointer
+    }
+
+    .data p{
+        @apply relative z-10 p-4 px-6 bg-black m-0.5 rounded-sm
+    }
+
+    .data2{
+        @apply bg-green-400 w-full h-full absolute rounded-md opacity-50
+    }
 }

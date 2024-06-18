@@ -23,13 +23,10 @@ model MachineData{
     id Int @id @default(autoincrement())
     localeName String
     temperature Int
-    Data1 Int
-    Data2 Int
-    Data3 Int
-}
-
-model LocationData {
-    id Int @id @default(autoincrement())
-    sla1 Float
-    sla2 Float
+    veloVent Int
+    direVent Int
+    chuva Int
+    pressao Int
+    umidade Int
+    altitude Int
 }
