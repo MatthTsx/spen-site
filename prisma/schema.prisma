@@ -24,7 +24,7 @@ model MachineData{
     localeName String
     temperature Int
     veloVent Int
-    direVent Int
+    direVent Int // N = 1, E = 2, S = 3, W = 4
     chuva Int
     pressao Int
     umidade Int

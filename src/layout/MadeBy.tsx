@@ -58,7 +58,7 @@ function MadeBy() {
 
         tl.current.to(ref1.current!, {
             rotate: "+=360",
-            duration: 5,
+            duration: 7,
             repeat: -1,
             ease: "linear"
         })
@@ -69,7 +69,7 @@ function MadeBy() {
         <div className='text-white h-[10%] items-end flex w-[100%] px-[5%]'>
             <h2>Creditos: </h2>
         </div>
-        <div className='w-[100%] h-[90%] flex items-center text-white justify-between px-[5%]'>
+        <div className='w-[100%] h-[90%] flex items-center text-white justify-between px-[5%] relative'>
             {GenerateComponentImage(["dan.jpg", "pedro.jpg", "rafael.jpg", "anaB.jpg", "matheus.jpg", "matheus.jpg", "matheus.jpg", "matheus.jpg"])}
             <div className='flex flex-col items-start gap-2 w-[25%] h-[80%]'>
                 <Image src={`/pictures/${CreditsData[hovered]!.ImagePath}`} width={500} height={500} alt={CreditsData[hovered]!.Name} priority
@@ -82,15 +82,29 @@ function MadeBy() {
   )
 
   function GenerateComponentImage(array: Array<string>){
-    return <div className='relative w-[45%] aspect-square flex items-center justify-center group' ref={ref1} onMouseEnter={() => tl.current?.timeScale(0.10)} onMouseLeave={() => tl.current?.timeScale(1)}>
+    return <div className='relative w-[45%] aspect-square flex items-center justify-center group drop-shadow-2xl'>
+    <div className='absolute bg-[#180900] w-[18em] aspect-[.8] top-[50%] clip-TV'/>
+    <div className='absolute w-20 aspect-square bg-[#00000031] z-10 rounded-full drop-shadow-2xl flex items-center justify-center'>
+        <div className='bg-[#423118] w-[90%] aspect-square rounded-full'/>
+        <div className='bg-[#382910] w-[75%] aspect-square rounded-full absolute'/>
+    </div>
+    <div className='relative w-[100%] aspect-square flex items-center justify-center group' ref={ref1} onMouseEnter={() => tl.current?.timeScale(0.10)} onMouseLeave={() => tl.current?.timeScale(1)}>
         {array.map((m,i) => 
-            <Image src={`/pictures/${m}`} key={i} alt={m} width={200} height={200} style={{
+            <div key={i} style={{
                 rotate: ( 360/array.length * (i + 1) ) + "deg",
                 }}
-                className='absolute translate-y-[-50%] object-cover w-[30%] aspect-[0.6] hover:z-10 opacity-75 hover:opacity-100 transition-all cursor-pointer group-hover:translate-y-[-40%] ImageHover  rounded-md'
-                onClick={() => setHovered(i)}
-                />
+                className='absolute translate-y-[-40%] object-cover w-[25%] aspect-[0.6] opacity-100 hover:opacity-100
+                transition-all cursor-pointer group-hover:translate-y-[-50%] ImageHover
+                rounded-xl flex items-center justify-center
+                bg-gradient-to-t from-[#fffaf7] to-[#3f3423] via-[#fffaf7]'
+                onClick={() => setHovered(i)}> 
+                <Image src={`/pictures/${m}`} alt={m} width={200} height={200}
+                    className='absolute translate-y-[-40%] object-cover w-[50%] aspect-[0.6] opacity-75 transition-all cursor-pointer rounded-md blur-[0.1em] group-hover:blur-none'
+                    />
+            </div>
+
         )}
+    </div>
     </div>
   }
 }

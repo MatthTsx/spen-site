@@ -10,13 +10,13 @@ export const AdminRouter = createTRPCRouter({
     .mutation(async ({ctx}) => {
         return await ctx.db.machineData.create({
             data: {
-                localeName: "cu do rafael", altitude: 2, chuva: 5, direVent: 1, pressao: 23, temperature: 34, umidade: 90,
-                veloVent: 23
+                localeName: "Itatiba - Merdadão", altitude: 200, chuva: 10.3, direVent: 4, pressao: 23, temperature: 32, umidade: 70,
+                veloVent: 6
             }
         })
     }),
     getAll: publicProcedure
-        .query(({ctx}) => ctx.db.machineData.findMany() ),
+        .query(({ctx}) => ctx.db.machineData.findMany({orderBy: {id: "desc"}}) ),
     
     DeleteAll: publicProcedure
         .mutation(({ctx}) => ctx.db.machineData.deleteMany()),
