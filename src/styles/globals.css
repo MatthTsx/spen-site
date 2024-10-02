@@ -37,7 +37,7 @@
     }
 
     .data2{
-        @apply bg-green-400 w-full h-full absolute rounded-md opacity-50
+        @apply bg-Navy-blue w-full h-full absolute rounded-md opacity-50
     }
 
     .clip-TV{

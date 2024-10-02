@@ -10,6 +10,11 @@ export default {
       },
       animation: {
         'spin-slow': 'spin 10s linear infinite forwards'
+      },
+      colors: {
+        'Navy-blue': "#202A44",
+        'Bronze': "#a0824d",
+        'Champagne-Gold':"#FAEEC8"
       }
     },
   },

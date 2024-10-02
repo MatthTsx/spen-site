@@ -11,11 +11,11 @@ function NavBar() {
                 </div>
                 <p><span className='text-black'>SP</span>EN</p>
             </div>
-            <p>Data</p>
+            {/* <p>Data</p>
             <p>About</p>
-            <p>Contact</p>
+            <p>Contact</p> */}
         </div>
-        <p>Sla</p>
+        <p>ETEC Rosa</p>
     </div>
   )
 }

@@ -3,97 +3,94 @@ import gsap from 'gsap'
 import React, { useEffect } from 'react'
 import { api } from '~/utils/api'
 
-const btnTxt = ["Visão Geral", "Temperatura", "Umidade", "Pressão", "chuva?", "Velocidade", "Direção"]
+const btnTxt = ["Visão Geral", "Temperatura", "Umidade", "Pressão", "Precipitação", "Velocidade do Vento", "Direção do Vento"]
 
 function Data() {
   const data = api.Admin.getAll.useQuery()
-  const loaded = React.useRef(false)
-  const [Selected, changeSelection] = React.useState({
-    prev: 0, next: 0
-  })
-  const ref = React.useRef<HTMLDivElement>()
-  const timeline = React.useRef(gsap.timeline())
+  const [selected, setSelected] = React.useState(0)
+  const indicatorRef = React.useRef<HTMLDivElement>(null)
+
+  useGSAP(() => {
+    gsap.to(indicatorRef.current!, {
+      y: `${120 * (selected+2)}%`,
+      duration: 0.3,
+      ease: "power2.out"
+    })
+  }, [selected])
 
   useEffect(() => {
-    // const pos = ref.current?.style.transform.split(",")[1]?.replace(")", "")
-
-    timeline.current.fromTo(ref.current!,{
-      // y: pos
-      y: `${100 + 100*Selected.prev}%`
-    } , {
-      y: `${100 + 100*Selected.next}%`,
-      duration: .2
-    },)
-  })
-
-  useEffect(() => {
-    if(loaded.current) return
-    loaded.current = true
-    setInterval(() => {
+    const interval = setInterval(() => {
       data.refetch().catch((e) => console.log(e))
-    }, 1000)
+    }, 60000) // Atualiza a cada minuto
 
-  }, [loaded])
+    return () => clearInterval(interval)
+  }, [])
 
-
-  if (!data.data) return <div className='w-screen h-screen'/>
-
-  console.log(data.data)
+  if (!data.data) return <div className='w-full h-screen flex items-center justify-center'>Carregando dados...</div>
 
   const DataView = () => {
-    if (Selected.next == 0) return <DVGeral/>
-    else if (Selected.next == 1) return <DVTempe/>
-    else if (Selected.next == 2) return <DVUmida/>
-    else if (Selected.next == 3) return <DVPress/>
-    else if (Selected.next == 4) return <DVChuva/>
-    else if (Selected.next == 5) return <DVVeloc/>
-    else return <DVDirec/>
+    const currentData = data.data[0]
+    switch (selected) {
+      case 0: return <DVGeral data={currentData} />
+      case 1: return <DVTempe temp={currentData?.temperature} />
+      case 2: return <DVUmida umidade={currentData?.umidade} />
+      case 3: return <DVPress pressao={currentData?.pressao} />
+      case 4: return <DVChuva chuva={currentData?.chuva} />
+      case 5: return <DVVeloc velocidade={currentData?.veloVent} />
+      case 6: return <DVDirec direcao={currentData?.direVent} />
+      default: return <DVGeral data={currentData} />
+    }
   }
-
-  const DVGeral = () => <div>Geral</div>
-  const DVTempe = () => <div>{data.data[0]?.temperature}ºC</div>
-  const DVUmida = () => <div>{data.data[0]?.umidade}%</div>
-  const DVPress = () => <div>{data.data[0]?.pressao}</div>
-  const DVChuva = () => <div>{data.data[0]?.chuva}</div>
-  const DVVeloc = () => <div>{data.data[0]?.veloVent}km/h</div>
-  const DVDirec = () => <div>{data.data[0]?.direVent}</div>
-
-  function SelectedIndicator(){
-    return (
-      <div className='relative h-[8%] aspect-square flex items-center justify-center -left-[20%]' ref={ref as React.MutableRefObject<HTMLDivElement>}>
-        <div className='w-[50%] aspect-square rounded-full bg-green-500'/>
-      </div>
-    )
-  }
-
 
   return (
-    <div className='h-screen w-screen flex items-center text-white flex-shrink-0 justify-center px-20 p-12'>
-      <div className='w-full h-full flex items-center gap-4 justify-between p-8'>
-        <div className='h-full w-[20%] flex flex-col items-start relative'>
-          <h3 className='absolute'>{data.data[0]!.localeName}</h3>
-          <SelectedIndicator/>
-          {btnTxt.map((t,i) => 
-            <button key={i} className='btn-Data' onClick={() => {
-              changeSelection((e) => ({next: i, prev: e.next}));
-              console.log(ref.current)
-              // gsap.to(ref.current!, {
-              //   y: `${125 + 100*Selected}%`,
-              //   duration: 1,
-              // })
-              // timeline.current.to(ref.current!, {
-              //   y: "+= 45"
-              // })
-            }}>{t}</button>
+    <div className='min-h-[45%] w-full flex flex-col md:flex-row items-center my-[5%] text-gray-800 px-4 md:px-20 py-12'>
+      <div className='w-full md:w-1/4 flex flex-col items-start relative mb-8 md:mb-0'>
+        <h3 className='text-2xl font-bold mb-6'>{data.data[0]?.localeName}</h3>
+          <div ref={indicatorRef} className='absolute h-8 w-1 bg-Navy-blue rounded-full -left-4'/>
+        <div className='flex flex-col space-y-4 mt-4'>
+          {btnTxt.map((t, i) => 
+            <button 
+              key={i} 
+              className={`text-left hover:text-blue-500 transition-colors ${selected === i ? 'font-bold text-Navy-blue' : ''}`}
+              onClick={() => setSelected(i)}
+            >
+              {t}
+            </button>
           )}
         </div>
-        
-        <div className='w-[80%] h-full px-4 bg-green-950/10 drop-shadow-md rounded-md'>
-          <DataView/>
-        </div>
+      </div>
+      
+      <div className='w-full md:w-3/4 h-full p-8 bg-white shadow-lg rounded-lg'>
+        <DataView />
       </div>
     </div>
   )
 }
+
+// Componentes de visualização de dados
+const DVGeral = ({ data }) => (
+  <div className='grid grid-cols-2 md:grid-cols-3 gap-6'>
+    <DataCard title="Temperatura" value={`${data?.temperature}°C`} />
+    <DataCard title="Umidade" value={`${data?.umidade}%`} />
+    <DataCard title="Pressão" value={`${data?.pressao} hPa`} />
+    <DataCard title="Precipitação" value={`${data?.chuva} mm`} />
+    <DataCard title="Velocidade do Vento" value={`${data?.veloVent} km/h`} />
+    <DataCard title="Direção do Vento" value={data?.direVent} />
+  </div>
+)
+
+const DataCard = ({ title, value }) => (
+  <div className='bg-Champagne-Gold/40 p-4 rounded-lg'>
+    <h4 className='text-sm text-Navy-blue/50'>{title}</h4>
+    <p className='text-2xl font-bold'>{value}</p>
+  </div>
+)
+
+const DVTempe = ({ temp }) => <DataCard title="Temperatura" value={`${temp}°C`} />
+const DVUmida = ({ umidade }) => <DataCard title="Umidade" value={`${umidade}%`} />
+const DVPress = ({ pressao }) => <DataCard title="Pressão" value={`${pressao} hPa`} />
+const DVChuva = ({ chuva }) => <DataCard title="Precipitação" value={`${chuva} mm`} />
+const DVVeloc = ({ velocidade }) => <DataCard title="Velocidade do Vento" value={`${velocidade} km/h`} />
+const DVDirec = ({ direcao }) => <DataCard title="Direção do Vento" value={direcao} />
 
 export default Data
