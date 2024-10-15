@@ -43,7 +43,7 @@ function Data() {
   }
 
   return (
-    <div className='min-h-[45%] w-full flex flex-col md:flex-row items-center my-[5%] text-gray-800 px-4 md:px-20 py-12'>
+    <div className='min-h-screen w-full flex flex-col md:flex-row items-center my-[5%] text-gray-800 px-4 md:px-20 py-12 z-[3] relative'>
       <div className='w-full md:w-1/4 flex flex-col items-start relative mb-8 md:mb-0'>
         <h3 className='text-2xl font-bold mb-6'>{data.data[0]?.localeName}</h3>
           <div ref={indicatorRef} className='absolute h-8 w-1 bg-Navy-blue rounded-full -left-4'/>
@@ -80,7 +80,7 @@ const DVGeral = ({ data }) => (
 )
 
 const DataCard = ({ title, value }) => (
-  <div className='bg-Champagne-Gold/40 p-4 rounded-lg'>
+  <div className='bg-GreenLight/50 p-4 rounded-lg'>
     <h4 className='text-sm text-Navy-blue/50'>{title}</h4>
     <p className='text-2xl font-bold'>{value}</p>
   </div>

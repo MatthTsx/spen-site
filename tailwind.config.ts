@@ -7,6 +7,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
+        inter: ['"Inter"', ...fontFamily.sans]
       },
       animation: {
         'spin-slow': 'spin 10s linear infinite forwards'
@@ -14,7 +15,9 @@ export default {
       colors: {
         'Navy-blue': "#202A44",
         'Bronze': "#a0824d",
-        'Champagne-Gold':"#FAEEC8"
+        'Champagne-Gold':"#FAEEC8",
+        'GreenDark': "#019966",
+        'GreenLight': "#01FFAA"
       }
     },
   },

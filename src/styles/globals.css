@@ -18,8 +18,21 @@
         2xl:h-[5%] 2xl:mb-[5%] 2xl:text-2xl
     }
 
+    h5{
+        @apply text-[20px] font-thin font-inter
+    }
+
     h4{
-        @apply text-[7em] tracking-[.25em] font-bold drop-shadow-xl
+        @apply text-[7em] tracking-[.25em] drop-shadow-xl font-bold
+    }
+
+    h1{
+        @apply text-[12.5em] tracking-[.25em] drop-shadow-xl font-inter font-extrabold bg-red-500 bg-clip-text text-transparent
+    }
+
+
+    .Hero_btn_holder > button{
+        @apply p-2 rounded-md min-w-24 px-6 font-inter font-bold text-[16px] bg-white hover:scale-105 transition-all
     }
 
     .ImageHover:hover{
